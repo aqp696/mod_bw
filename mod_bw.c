@@ -36,6 +36,7 @@ Limitations  : This mod doesn't know how fast the client is
 
 Changelog :
 
+2019-07-04 : Update to make it work with the new api of apache 2.4. See https://httpd.apache.org/docs/current/developer/new_api_2_4.html
 2010-07-20 : Fixed ap_get_server_banner unknown on older apache version
 2010-05-27 : Fixed weird behaviour on Windows Hosts. (mod_bw.txt)
              Added high resolution timers for windows. (speed improvements)
@@ -48,7 +49,7 @@ Changelog :
 
 */
 
-#define VERSION "0.92"
+#define VERSION "0.93"
 
 #include "apr_version.h"
 #include "apr_buckets.h"
@@ -564,7 +565,7 @@ static long get_bw_rate(request_rec * r, apr_array_header_t * a)
             return e[i].rate;
 
         case T_IP:
-            if (apr_ipsubnet_test(e[i].x.ip, r->connection->remote_addr)) {
+            if (apr_ipsubnet_test(e[i].x.ip, r->connection->client_ip)) {
                 return e[i].rate;
             }
             break;
@@ -655,7 +656,7 @@ static int get_maxconn(request_rec * r, apr_array_header_t * a)
             return e[i].max;
 
         case T_IP:
-            if (apr_ipsubnet_test(e[i].x.ip, r->connection->remote_addr)) {
+            if (apr_ipsubnet_test(e[i].x.ip, r->connection->client_ip)) {
                 return e[i].max;
             }
             break;
@@ -706,7 +707,7 @@ static int get_sid(request_rec * r, apr_array_header_t * a)
             return e[i].sid;
 
         case T_IP:
-            if (apr_ipsubnet_test(e[i].x.ip, r->connection->remote_addr)) {
+            if (apr_ipsubnet_test(e[i].x.ip, r->connection->client_ip)) {
                 return e[i].sid;
             }
             break;
