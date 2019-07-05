@@ -565,7 +565,7 @@ static long get_bw_rate(request_rec * r, apr_array_header_t * a)
             return e[i].rate;
 
         case T_IP:
-            if (apr_ipsubnet_test(e[i].x.ip, r->connection->client_ip)) {
+            if (apr_ipsubnet_test(e[i].x.ip, r->connection->client_addr)) {
                 return e[i].rate;
             }
             break;
@@ -656,7 +656,7 @@ static int get_maxconn(request_rec * r, apr_array_header_t * a)
             return e[i].max;
 
         case T_IP:
-            if (apr_ipsubnet_test(e[i].x.ip, r->connection->client_ip)) {
+            if (apr_ipsubnet_test(e[i].x.ip, r->connection->client_addr)) {
                 return e[i].max;
             }
             break;
@@ -707,7 +707,7 @@ static int get_sid(request_rec * r, apr_array_header_t * a)
             return e[i].sid;
 
         case T_IP:
-            if (apr_ipsubnet_test(e[i].x.ip, r->connection->client_ip)) {
+            if (apr_ipsubnet_test(e[i].x.ip, r->connection->client_addr)) {
                 return e[i].sid;
             }
             break;
