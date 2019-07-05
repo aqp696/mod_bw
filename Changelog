@@ -1,6 +1,6 @@
 V0.93
 ------------
-2019-07-04
+2019-07-04 :
 
 - Update to make it work with the new api of apache 2.4. See https://httpd.apache.org/docs/current/developer/new_api_2_4.html
 
